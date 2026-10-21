@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Cardápio digital do Bob Esponja Lanches. Escolha seus lanches e faça o pedido pelo WhatsApp.">
+<meta name="theme-color" content="#0A4F7A">
+<title>Bob Esponja Lanches | Cardápio Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Cabeçalho com foto de hambúrguer; as imagens dos produtos estão configuradas em js/data.js. -->
+<header class="hero">
+  <img class="banner" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=2000&q=85" alt="" fetchpriority="high" onerror="this.style.display='none'">
+  <div class="hero-in">
+    <div class="logo" aria-label="Bob Esponja Lanches">🧽</div>
+    <h1>Bob Esponja Lanches</h1>
+    <p class="hero-tagline">Lanches feitos com amor, direto da Fenda do Biquíni</p>
+    <div class="hero-proof"><span><i class="fa-solid fa-burger"></i> Feito na hora</span><span><i class="fa-solid fa-motorcycle"></i> Delivery e retirada</span><span><i class="fa-brands fa-whatsapp"></i> Pedido fácil</span></div>
+    <div class="meta">
+      <span class="pill" id="status"></span>
+      <span class="pill"><i class="fa-regular fa-clock"></i> <span id="horario"></span></span>
+      <a class="pill ig" id="insta" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i> Instagram</a>
+    </div>
+  </div>
+</header>
+
+<div class="sticky">
+  <div class="wrap">
+    <div class="search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input id="busca" type="search" placeholder="Buscar no cardápio" aria-label="Buscar no cardápio" autocomplete="off">
+    </div>
+    <nav class="tabs" id="tabs" aria-label="Categorias"></nav>
+  </div>
+</div>
+
+<main class="wrap"><section class="menu-intro"><div><span class="eyebrow">SABOR QUE VEM DO FUNDO DO MAR</span><h2>Escolha seu favorito</h2><p>Seu próximo lanche especial está aqui.</p></div><span class="menu-stamp"><i class="fa-solid fa-heart"></i> Preparado com carinho</span></section><div id="menu"></div></main>
+<footer><p>© <span id="ano"></span> Bob Esponja Lanches. Pedidos finalizados pelo WhatsApp.</p></footer>
+
+<button class="bar" id="bar" aria-label="Abrir sacola">
+  <span><i class="fa-solid fa-bag-shopping"></i> Ver sacola <span class="badge" id="barQtd">0</span></span>
+  <span id="barTotal">R$ 0,00</span>
+</button>
+
+<!-- JANELA DO PRODUTO (preenchida pelo JavaScript) -->
+<dialog id="modal" aria-label="Detalhes do produto"></dialog>
+
+<!-- SACOLA + CHECKOUT -->
+<dialog id="bag" aria-label="Sua sacola">
+  <div class="d-pad">
+    <div class="dhead">
+      <h2>🛍️ Sua sacola</h2>
+      <button class="x2" data-close aria-label="Fechar sacola"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="items"></div>
+    <div class="totals">
+      <div><span>Subtotal</span><span id="sub">R$ 0,00</span></div>
+      <div><span>Taxa de entrega</span><span id="fee">-</span></div>
+      <div class="grand"><span>Total</span><span id="tot">R$ 0,00</span></div>
+    </div>
+    <form id="form" novalidate onsubmit="return false">
+      <h3>Seus dados</h3>
+      <div class="field">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" placeholder="Como podemos te chamar?" autocomplete="name">
+        <div class="errmsg">Informe seu nome.</div>
+      </div>
+      <div class="field">
+        <label>Como você quer receber?</label>
+        <div class="segs">
+          <label class="seg"><input type="radio" name="tipo" value="Delivery" checked><span>🛵 Delivery</span></label>
+          <label class="seg"><input type="radio" name="tipo" value="Retirada"><span>🏪 Retirada</span></label>
+        </div>
+      </div>
+      <div class="field" id="endWrap">
+        <label for="end">Endereço de entrega</label>
+        <input type="text" id="end" placeholder="Rua, número, bairro e complemento" autocomplete="street-address">
+        <div class="errmsg">Informe o endereço para o delivery.</div>
+      </div>
+      <div class="field">
+        <label for="pag">Forma de pagamento</label>
+        <select id="pag">
+          <option value="" selected disabled>Escolha uma opção</option>
+          <option>Cartão</option><option>Pix</option><option>Dinheiro</option>
+        </select>
+        <div class="errmsg">Escolha a forma de pagamento.</div>
+      </div>
+      <div class="field" id="trocoWrap" hidden>
+        <label for="troco">Troco para quanto? (opcional)</label>
+        <input type="text" id="troco" inputmode="numeric" placeholder="Ex: 50">
+      </div>
+      <div class="field">
+        <label for="obs">Observações do pedido (opcional)</label>
+        <textarea id="obs" maxlength="200" placeholder="Ex: tocar a campainha"></textarea>
+      </div>
+      <button type="button" class="cta wa" id="sendBtn"><i class="fa-brands fa-whatsapp"></i> Finalizar Pedido</button>
+      <button type="button" class="link" id="clearBtn">Esvaziar sacola</button>
+    </form>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

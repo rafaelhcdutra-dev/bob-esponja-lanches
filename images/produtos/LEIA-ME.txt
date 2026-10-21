@@ -1,0 +1,5 @@
+Coloque aqui as fotos dos produtos.
+O nome do arquivo deve ser igual ao "id" do produto em js/data.js, com .jpg
+Exemplo: hamburguer-siri-classico.jpg
+Tamanho ideal: 600x600 pixels (quadrada), até 150 KB.
+Sem a foto, aparece a esponja amarela no lugar.
